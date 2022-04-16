@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [ 'About', 'Contact', 'Products'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
@@ -143,8 +143,8 @@ export default Navbar;
 
 
 // <NavLink to='/'>Fraternity</NavLink>
-//             <NavLink to='/register'>Register</NavLink>
-//             <NavLink to='/login'>Login</NavLink>
-//             <NavLink to='/about'>About</NavLink>
-//             <NavLink to='/contact'>Contact</NavLink>
-//             <NavLink to='/products'>Products</NavLink>
+// <NavLink to='/register'>Register</NavLink>
+// <NavLink to='/login'>Login</NavLink>
+// <NavLink to='/about'>About</NavLink>
+// <NavLink to='/contact'>Contact</NavLink>
+// <NavLink to='/products'>Products</NavLink>
