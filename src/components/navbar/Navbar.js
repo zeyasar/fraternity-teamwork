@@ -12,17 +12,21 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+
+const pages = [ 'About', 'Contact', 'Products'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
+
+const ResponsiveAppBar = () => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+
     setAnchorElUser(event.currentTarget);
   };
 
@@ -137,14 +141,39 @@ const Navbar = () => {
     </AppBar>
   );
 };
+
 export default Navbar;
 
 
 
 
 // <NavLink to='/'>Fraternity</NavLink>
-//             <NavLink to='/register'>Register</NavLink>
-//             <NavLink to='/login'>Login</NavLink>
-//             <NavLink to='/about'>About</NavLink>
-//             <NavLink to='/contact'>Contact</NavLink>
-//             <NavLink to='/products'>Products</NavLink>
+// <NavLink to='/register'>Register</NavLink>
+// <NavLink to='/login'>Login</NavLink>
+// <NavLink to='/about'>About</NavLink>
+// <NavLink to='/contact'>Contact</NavLink>
+// <NavLink to='/products'>Products</NavLink>
+
+export default ResponsiveAppBar;
+
+
+
+// import React from 'react'
+// import { NavLink } from 'react-router-dom'
+
+// const Navbar = () => {
+//   return (
+//     <div>
+//         <NavLink to="/">Fraternity</NavLink>
+//         {/* <NavLink to="/">Home</NavLink> */}
+//         {/* <NavLink to="/register">Register</NavLink> */}
+//         <NavLink to="/login">Login</NavLink>
+//         <NavLink to="/about">About Us</NavLink>
+//         <NavLink to="/contact">Contact</NavLink>
+//         <NavLink to="/product">Products</NavLink>
+//         <NavLink to="/basket">Basket</NavLink>
+//     </div>
+//   )
+// }
+
+// export default Navbar
