@@ -12,8 +12,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+
+const pages = [ 'About', 'Contact', 'Products'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -23,6 +26,7 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+
     setAnchorElUser(event.currentTarget);
   };
 
@@ -137,6 +141,19 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
+
+export default Navbar;
+
+
+
+
+// <NavLink to='/'>Fraternity</NavLink>
+// <NavLink to='/register'>Register</NavLink>
+// <NavLink to='/login'>Login</NavLink>
+// <NavLink to='/about'>About</NavLink>
+// <NavLink to='/contact'>Contact</NavLink>
+// <NavLink to='/products'>Products</NavLink>
+
 export default ResponsiveAppBar;
 
 
