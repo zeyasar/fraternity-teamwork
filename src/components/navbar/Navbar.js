@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+/* import MenuItem from '@mui/material/MenuItem'; */
 
 
 const pages = [ 'About', 'Contact', 'Products'];
@@ -124,9 +124,9 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <NavLink to={"/"+setting.toLocaleLowerCase()} key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                </NavLink>
               ))}
             </Menu>
           </Box>

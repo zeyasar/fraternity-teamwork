@@ -9,6 +9,7 @@ import Contact from '../pages/Contact'
 import Basket from '../pages/Basket'
 import Register from '../pages/Register'
 import Details from '../pages/Details'
+import Footer from '../components/footer/Footer'
 
 const AppRouter = () => {
   return (
@@ -24,6 +25,7 @@ const AppRouter = () => {
             <Route path="/basket" element={<Basket/>}/>
             <Route path="/details" element={<Details/>}/>
         </Routes>
+        <Footer/>
     </Router>
   )
 }
