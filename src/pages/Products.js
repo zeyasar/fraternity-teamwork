@@ -75,7 +75,7 @@ const Products = () => {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton aria-label="share"  sx={{marginLeft:"60%"}}> 
             <AddShoppingCartIcon />
           </IconButton>
         </CardActions>

@@ -10,10 +10,12 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 const Details = () => {
   const {details} = useContext(ProductContext)
+  const navigate = useNavigate()
   console.log(details)
   return (
     <div>
@@ -30,6 +32,9 @@ const Details = () => {
     <Card sx={{ display: 'flex', height:'90vh'}}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
+        <IconButton sx={{ display: 'flex', flexDirection: 'column'}} onClick={()=>navigate(-1)}>
+      <ArrowBackIcon  sx={{fontSize:45,color:"black"}}/>
+      </IconButton>
           <Typography component='div' variant='h5'>
             {details.title}
           </Typography>
@@ -54,7 +59,7 @@ const Details = () => {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton aria-label="share" sx={{marginLeft:"90%"}}>
             <AddShoppingCartIcon />
           </IconButton>
         </CardActions>
