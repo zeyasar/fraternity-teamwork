@@ -11,9 +11,20 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 /* import MenuItem from '@mui/material/MenuItem'; */
 
-
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}));
 const pages = [ 'About', 'Contact', 'Products'];
 const settings = ["Basket","Login"];
 
@@ -100,7 +111,11 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
           </Box>
-
+         <IconButton aria-label="cart" sx={{marginRight:"10px"}}>
+        <StyledBadge badgeContent={4} color="secondary">
+          <ShoppingCartIcon />
+        </StyledBadge>
+      </IconButton>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
