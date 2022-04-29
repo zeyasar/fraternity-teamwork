@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Products = () => {
-  const {productList,setDetails} = React.useContext(ProductContext)
+  const {productList,setDetails,setBasket,basket} = React.useContext(ProductContext)
+  console.log(basket)
   const navigate = useNavigate()
   console.log(productList)
   const truncateOverview = (string, maxLength) => {
@@ -33,6 +34,11 @@ const Products = () => {
     //tıklanan ürün bilgilerini contexte gönderdik
     navigate('/details/'+products.id)
     // router da path olarak belirttiğimiz path="details/:id" diye yazdığımız yer : nokta id kısmını ifade ettiği için id değerini alıyoruz navigate içine koyuyoruz
+  }
+  const handleAddToBasket = (item) => {
+    const newBasket = [...basket,item]
+    setBasket(newBasket)
+    console.log(basket)
   }
 
   return (
@@ -75,7 +81,7 @@ const Products = () => {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-          <IconButton aria-label="share"  sx={{marginLeft:"60%"}}> 
+          <IconButton aria-label="share"  sx={{marginLeft:"60%"}} onClick={()=>handleAddToBasket({...product,"quantity":1})}> 
             <AddShoppingCartIcon />
           </IconButton>
         </CardActions>

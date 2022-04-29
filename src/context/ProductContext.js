@@ -6,6 +6,7 @@ export const ProductContext = createContext()
 const ProductContextProvider = (props) => {
     const [productList,setProductList] = useState([])
     const [details,setDetails] = useState({})
+    const [basket,setBasket] = useState([])
     
     useEffect(() => {
         fetch("https://fakestoreapi.com/products")
@@ -16,7 +17,7 @@ const ProductContextProvider = (props) => {
     },[]) 
 
     return(
-        <ProductContext.Provider value={{productList,setDetails,details}}>
+        <ProductContext.Provider value={{productList,setDetails,details,basket,setBasket}}>
             {props.children}
         </ProductContext.Provider>
     )

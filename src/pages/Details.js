@@ -14,9 +14,17 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 
 const Details = () => {
-  const {details} = useContext(ProductContext)
+  const {details,basket,setBasket} = useContext(ProductContext)
   const navigate = useNavigate()
   console.log(details)
+
+  const handleAddToBasket = (item) => {
+    
+    const newBasket = [...basket,item]
+    setBasket(newBasket)
+    console.log(basket)
+  }
+
   return (
     <div>
       <Box
@@ -59,7 +67,7 @@ const Details = () => {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-          <IconButton aria-label="share" sx={{marginLeft:"90%"}}>
+          <IconButton aria-label="share" sx={{marginLeft:"90%"}} onClick={()=>handleAddToBasket({...details})}>
             <AddShoppingCartIcon />
           </IconButton>
         </CardActions>

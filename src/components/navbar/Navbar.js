@@ -13,6 +13,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
+import { useContext } from 'react';
+import { ProductContext } from '../../context/ProductContext';
+import {useNavigate} from "react-router-dom";
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 /* import MenuItem from '@mui/material/MenuItem'; */
@@ -31,8 +34,10 @@ const settings = ["Basket","Login"];
 
 
 const ResponsiveAppBar = () => {
+  const {basket} = useContext(ProductContext)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  // const navigate = useNavigate()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -48,6 +53,7 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const navigate = useNavigate()
 
   return (
     <AppBar position="static">
@@ -111,8 +117,8 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
           </Box>
-         <IconButton aria-label="cart" sx={{marginRight:"10px"}}>
-        <StyledBadge badgeContent={4} color="secondary">
+         <IconButton aria-label="cart" sx={{marginRight:"10px"}} onClick={()=>navigate("/basket")}>
+        <StyledBadge badgeContent={basket.length} color="secondary">
           <ShoppingCartIcon />
         </StyledBadge>
       </IconButton>
