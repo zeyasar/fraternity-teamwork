@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
@@ -15,7 +16,9 @@ import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import { useContext } from 'react';
 import { ProductContext } from '../../context/ProductContext';
+import { AuthContext } from '../../context/AuthContext';
 import {useNavigate} from "react-router-dom";
+import {logOut} from "../../helpers/firebase";
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 /* import MenuItem from '@mui/material/MenuItem'; */
@@ -29,7 +32,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 const pages = [ 'About', 'Contact', 'Products'];
-const settings = ["Basket","Login"];
+const settings = ["Register","Login"];
+const settings2 = ["Profile","Logout"];
 
 
 
@@ -37,7 +41,8 @@ const ResponsiveAppBar = () => {
   const {basket} = useContext(ProductContext)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const navigate = useNavigate()
+  const {currentUser} = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,13 +52,22 @@ const ResponsiveAppBar = () => {
   };
 
   const handleCloseNavMenu = () => {
+    
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
+    if(e.target.innerText === "Logout"){
+      logOut()
+      navigate("/")
+    } else if(e.target.innerText === "Profile"){
+      navigate("/profile")
+    } else if(e.target.innerText === "Login"){
+      navigate("/login")
+    }
+
     setAnchorElUser(null);
   };
-  const navigate = useNavigate()
 
   return (
     <AppBar position="static">
@@ -125,7 +139,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {currentUser ? (currentUser.email[0].toUpperCase()):(<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />)}
               </IconButton>
             </Tooltip>
             <Menu
@@ -144,11 +158,15 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <NavLink to={"/"+setting.toLocaleLowerCase()} key={setting} onClick={handleCloseUserMenu}>
+              {currentUser ? (settings2.map((setting) => (
+                <MenuItem  key={setting} onClick={(e)=>handleCloseUserMenu(e)}>
                   <Typography textAlign="center">{setting}</Typography>
-                </NavLink>
-              ))}
+                </MenuItem>
+              ))) :(settings.map((setting) => (
+                <MenuItem  key={setting} onClick={(e)=>handleCloseUserMenu(e)}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              )))}
             </Menu>
           </Box>
         </Toolbar>

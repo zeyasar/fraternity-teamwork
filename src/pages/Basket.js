@@ -104,12 +104,11 @@ function preventDefault(event) {
 
 export default function Basket() {
   const {basket} = useContext(ProductContext)
-  const newProducts = []
-
   for(let i=0;i<basket.length;i++){
-    newProducts = basket.filter(item => item.id !== basket[i].id)
+    const newProducts = basket.filter(item => item.id !== basket[i].id)
+    console.log(newProducts)
   }
-  console.log(newProducts)
+
 
   return (
     <React.Fragment>
