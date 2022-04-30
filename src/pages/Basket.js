@@ -53,82 +53,62 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 import {useContext} from 'react'
 import {ProductContext} from '../context/ProductContext'
+import { IconButton } from '@mui/material';
 
-// Generate Order Data
-/* function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
-} */
 
 export default function Basket() {
-  const {basket} = useContext(ProductContext)
-  for(let i=0;i<basket.length;i++){
-    const newProducts = basket.filter(item => item.id !== basket[i].id)
-    console.log(newProducts)
+  const {basket,setCount,count,myArray} = useContext(ProductContext)
+  // const newBasket = basket.filter((item)=>item)
+  const increaseButton = (item) => {
+    for(let i=0;i<basket.length+1;i++){
+      if(basket[i].id === item.id){
+        basket[i].quantity += 1
+        setCount(count+1)
+      }
+    }
   }
-
+  const decreaseButton = (item) => {
+    for(let i=0;i<basket.length+1;i++){
+      if(basket[i].id === item.id){
+        basket[i].quantity -= 1
+        setCount(count-1)
+        if(basket[i].quantity === 0){
+            basket.splice(i,1)   
+          for(let j =0;j<myArray.length;j++){
+            if(myArray[j] === item.id){
+              myArray.splice(j,1)
+            }
+          }
+        }
+      }
+    }
+  }
+  console.log("basket",basket)
 
   return (
     <React.Fragment>
-      <Table size="small">
+      <Table size="small" sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>
         <TableHead>
-          <TableRow>
-            <TableCell>Image</TableCell>
+          <TableRow  sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>
+            <TableCell >Image</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Price</TableCell>
-            <TableCell>Quantity</TableCell>
+            <TableCell  sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>Quantity</TableCell>
             <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {basket.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={row.id}  sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>
               <TableCell><img src={row.image} alt="product" width="50px" height="50px" /></TableCell>
               <TableCell>{row.title}</TableCell>
               <TableCell>{row.price}</TableCell>
-              <TableCell>{row.quantity}</TableCell>
+              <TableCell  sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}><IconButton onClick={()=>decreaseButton({...row})}><RemoveIcon/></IconButton>{row.quantity}<IconButton onClick={()=>increaseButton({...row})}><AddIcon/></IconButton></TableCell>
               <TableCell align="right">{`$${row.price*row.quantity}`}</TableCell>
             </TableRow>
           ))}
