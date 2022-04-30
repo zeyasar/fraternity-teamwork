@@ -38,7 +38,7 @@ const settings2 = ["Profile","Logout"];
 
 
 const ResponsiveAppBar = () => {
-  const {basket} = useContext(ProductContext)
+  const {count} = useContext(ProductContext)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const {currentUser} = useContext(AuthContext)
@@ -132,7 +132,7 @@ const ResponsiveAppBar = () => {
             ))}
           </Box>
          <IconButton aria-label="cart" sx={{marginRight:"10px"}} onClick={()=>navigate("/basket")}>
-        <StyledBadge badgeContent={basket.length} color="secondary">
+        <StyledBadge badgeContent={count} color="secondary">
           <ShoppingCartIcon />
         </StyledBadge>
       </IconButton>
