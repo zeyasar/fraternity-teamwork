@@ -8,6 +8,7 @@ import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAut
 const firebaseConfig = {
   apiKey: "AIzaSyCaI1cHqAgW4yZj2W7R3HhmaG4HvxM3U-Q",
   authDomain: "fraternity-team.firebaseapp.com",
+  databaseURL: "https://fraternity-team-default-rtdb.firebaseio.com",
   projectId: "fraternity-team",
   storageBucket: "fraternity-team.appspot.com",
   messagingSenderId: "478603598562",
