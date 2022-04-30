@@ -19,11 +19,12 @@ import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 
 const Products = () => {
-  const { productList, setDetails, setBasket, basket } =
-    React.useContext(ProductContext);
-  console.log(basket);
-  const navigate = useNavigate();
-  console.log(productList);
+
+  const {productList,setDetails,setBasket,basket,count,setCount,myArray,setMyArray} = React.useContext(ProductContext)
+  
+  console.log(basket)
+  const navigate = useNavigate()
+  console.log(productList)
   const [value, setValue] = React.useState(2);
   const truncateOverview = (string, maxLength) => {
     if (!string) return null;
@@ -38,10 +39,23 @@ const Products = () => {
     // router da path olarak belirttiğimiz path="details/:id" diye yazdığımız yer : nokta id kısmını ifade ettiği için id değerini alıyoruz navigate içine koyuyoruz
   };
   const handleAddToBasket = (item) => {
-    const newBasket = [...basket, item];
-    setBasket(newBasket);
-    console.log(basket);
-  };
+    setCount(count+1)
+    if(!myArray.includes(item.id)){
+      const newBasket = [...basket,item]
+      setBasket(newBasket)
+      setMyArray([...myArray,item.id])
+    }else{
+      for(let i=0;i<basket.length+1;i++){
+        if(basket[i].id === item.id){
+          basket[i].quantity += 1
+        }
+      }
+      
+    }
+    
+    console.log(basket)
+  }
+  console.log("myarray",myArray)
 
   return (
     <div>
@@ -130,3 +144,4 @@ const Products = () => {
 };
 
 export default Products;
+
