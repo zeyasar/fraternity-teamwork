@@ -80,6 +80,8 @@ const ResponsiveAppBar = () => {
       navigate("/profile")
     } else if(e.target.innerText === "Login"){
       navigate("/login")
+    }else if(e.target.innerText === "Register"){
+      navigate("/register")
     }
 
     setAnchorElUser(null);

@@ -12,10 +12,13 @@ import {ProductContext} from '../context/ProductContext'
 import {AuthContext} from '../context/AuthContext'
 import { IconButton } from '@mui/material';
 import {DeleteInfo} from "../helpers/databaseFunc"
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function Basket() {
   const {basket,setBasket,setMyArray,setCount,count,myArray,basketList} = useContext(ProductContext)
   const {currentUser} = useContext(AuthContext)
+  const [total,setTotal] = React.useState(0)
+  const navigate = useNavigate()
 
 
     let myBasket = basketList?.filter((item) => item.email === currentUser?.email)
@@ -29,6 +32,7 @@ export default function Basket() {
       await  setCount(myUserProducts[0].counts)
       await setMyArray(myUserProducts[0].myArrays)
       await setBasket(myBasketList)
+      // await setTotal(basket?.reduce((x,y)=>(+x.price)+(+y.price)))
       await DeleteInfo(myBasket[0].id)
       myBasket = []
     }
@@ -61,7 +65,9 @@ export default function Basket() {
     }
   }
   console.log("basket",basket)
-
+  // if(basket.length>0){
+  //   setTotal(basket?.reduce((x,y)=>(+x.price)+(+y.price)))
+  // }
   return (
     <React.Fragment>
       <Table size="small" sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>
@@ -83,12 +89,17 @@ export default function Basket() {
               <TableCell  sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}><IconButton onClick={()=>decreaseButton({...row})}><RemoveIcon/></IconButton>{row.quantity}<IconButton onClick={()=>increaseButton({...row})}><AddIcon/></IconButton></TableCell>
               <TableCell align="right">{`$${row.price*row.quantity}`}</TableCell>
             </TableRow>
+
           ))}
+          <TableRow>
+            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell align="right">{`$${basket.length>0 ? basket?.reduce((x,y)=>(+x.price)+(+y.price)):0}`}</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
-      <Link color="primary" href="#"  sx={{ mt: 3 }}>
-        See more orders
-      </Link>
+      <div color="primary" onClick={()=>navigate("/checkout")}  sx={{ mt: 3 }}>
+        Finish Your Order
+      </div>
     </React.Fragment>
   );
 }
