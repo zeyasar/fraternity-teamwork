@@ -14,15 +14,26 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 
 const Details = () => {
-  const {details,basket,setBasket} = useContext(ProductContext)
+  const {details,basket,setBasket,myArray,setMyArray,count,setCount} = useContext(ProductContext)
   const navigate = useNavigate()
   console.log(details)
 
   const handleAddToBasket = (item) => {
     
-    const newBasket = [...basket,item]
-    setBasket(newBasket)
-    console.log(basket)
+    setCount(count+1)
+    if(!myArray.includes(item.id)){
+      const newBasket = [...basket,item]
+      setBasket(newBasket)
+      setMyArray([...myArray,item.id])
+      
+    }else{
+      for(let i=0;i<basket.length+1;i++){
+        if(basket[i].id === item.id){
+          basket[i].quantity += 1
+        }
+      }
+      
+    }
   }
 
   return (
@@ -37,19 +48,19 @@ const Details = () => {
       }}
     >
     
-    <Card sx={{ display: 'flex', height:'90vh'}}>
+    <Card sx={{ display: 'flex'}}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
         <IconButton sx={{ display: 'flex', flexDirection: 'column'}} onClick={()=>navigate(-1)}>
       <ArrowBackIcon  sx={{fontSize:45,color:"black"}}/>
       </IconButton>
-          <Typography component='div' variant='h5'>
+          <Typography component='div' variant='h5' sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>
             {details.title}
           </Typography>
           <Typography component='div' variant='span'>
             {details.category}
           </Typography>
-          <Typography variant='subtitle1' color='text.secondary' component='div' sx={{marginTop:20}}>
+          <Typography variant='subtitle1' color='text.secondary' component='div' sx={{marginTop:20,justifyContent:"center"}}>
             {details?.description}
           </Typography>
         </CardContent>
@@ -74,7 +85,7 @@ const Details = () => {
       </Box>
       <CardMedia
         component='img'
-        sx={{ width: 451, height: 'auto' }}
+        sx={{ width: 421, height: 421 }}
         image={details?.image}
         alt='Live from space album cover'
       />

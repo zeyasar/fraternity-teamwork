@@ -36,7 +36,7 @@ export const createUser = async(email,password,displayName,navigate) => {
  export const signIn = async(email,password,navigate) => {
     try {
         await signInWithEmailAndPassword(auth,email,password);
-        navigate('/');
+        navigate('/basket');
     } catch (error) {
         alert(error.message);
     }

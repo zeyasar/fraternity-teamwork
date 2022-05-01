@@ -1,51 +1,3 @@
-/* import React from 'react'
-import {useContext} from 'react'
-import {ProductContext} from '../context/ProductContext'
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { CardMedia } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import IconButton from "@mui/material/IconButton";
-
-
-const Basket = () => {
-  const {basket} = useContext(ProductContext)
-  return (
-    <div>
-      {basket?.map((item, index) => (
-            <Card sx={{ maxWidth: 345,minWidth:345, m: 5, maxHeight: 500,minHeight:500,backgroundColor:"bisque" }} key={index}>
-              <CardMedia
-                component="img"
-                height="250"
-                image={item?.image}
-                alt="img"
-              />
-              <CardContent sx={{height:150}}>
-                <Typography gutterBottom variant="h6" component="div">
-                  {item?.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{height:"55px",overflow: "hidden",whiteSpace: "pre",textOverflow: "ellipsis"}} component="div">
-                  {item?.content ? item?.content : item?.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <IconButton aria-label="add to basket" onClick={() => {}}>
-                  <AddIcon />
-                </IconButton>
-                <IconButton aria-label="remove from basket" onClick={() => {}}>
-                  <RemoveIcon />
-                </IconButton>
-              </CardActions>
-            </Card>
-          ))}
-    </div>
-  )
-}
-
-export default Basket */
 import * as React from 'react';
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
@@ -55,15 +7,35 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-
 import {useContext} from 'react'
 import {ProductContext} from '../context/ProductContext'
+import {AuthContext} from '../context/AuthContext'
 import { IconButton } from '@mui/material';
-
+import {DeleteInfo} from "../helpers/databaseFunc"
 
 export default function Basket() {
-  const {basket,setCount,count,myArray} = useContext(ProductContext)
-  // const newBasket = basket.filter((item)=>item)
+  const {basket,setBasket,setMyArray,setCount,count,myArray,basketList} = useContext(ProductContext)
+  const {currentUser} = useContext(AuthContext)
+
+
+    let myBasket = basketList?.filter((item) => item.email === currentUser?.email)
+
+  const myFunc = async () => {
+    if(myBasket?.length > 0){
+      console.log(myBasket)
+      console.log(myBasket.id)
+      let myUserProducts= await [...myBasket]
+      const myBasketList =await [ ...myUserProducts[0].baskets]
+      await  setCount(myUserProducts[0].counts)
+      await setMyArray(myUserProducts[0].myArrays)
+      await setBasket(myBasketList)
+      await DeleteInfo(myBasket[0].id)
+      myBasket = []
+    }
+  }
+  React.useEffect(() => {
+    myFunc()
+  },[]) 
   const increaseButton = (item) => {
     for(let i=0;i<basket.length+1;i++){
       if(basket[i].id === item.id){
@@ -103,7 +75,7 @@ export default function Basket() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {basket.map((row) => (
+          {basket.length>0 && basket.map((row) => (
             <TableRow key={row.id}  sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>
               <TableCell><img src={row.image} alt="product" width="50px" height="50px" /></TableCell>
               <TableCell>{row.title}</TableCell>

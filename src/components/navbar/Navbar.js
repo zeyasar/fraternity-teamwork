@@ -10,6 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import Badge from '@mui/material/Badge';
@@ -19,8 +20,10 @@ import { ProductContext } from '../../context/ProductContext';
 import { AuthContext } from '../../context/AuthContext';
 import {useNavigate} from "react-router-dom";
 import {logOut} from "../../helpers/firebase";
-
+import {AddInfo} from "../../helpers/databaseFunc";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import "./NavBar.css";
+
 /* import MenuItem from '@mui/material/MenuItem'; */
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -38,10 +41,16 @@ const settings2 = ["Profile","Logout"];
 
 
 const ResponsiveAppBar = () => {
-  const {count} = useContext(ProductContext)
+  const {basket,count,myArray,setBasket,setMyArray,setCount} = useContext(ProductContext)
+  const {currentUser} = useContext(AuthContext)
+
+  const email="email"
+  const baskets="baskets"
+  const myArrays="myArrays"
+  const counts="counts"
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {currentUser} = useContext(AuthContext)
+
   const navigate = useNavigate()
 
   const handleOpenNavMenu = (event) => {
@@ -59,6 +68,13 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = (e) => {
     if(e.target.innerText === "Logout"){
       logOut()
+
+      if(basket.length > 0){
+        AddInfo({[email]:currentUser.email,[baskets]:{...basket},[myArrays]:[...myArray],[counts]:count})
+      }
+      setBasket([])
+      setMyArray([])
+      setCount(0)
       navigate("/")
     } else if(e.target.innerText === "Profile"){
       navigate("/profile")
@@ -70,7 +86,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor:"#222831"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -112,10 +128,9 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <NavLink to={"/"+page.toLocaleLowerCase()} key={page} onClick={handleCloseNavMenu}>
+                <NavLink to={"/"+page.toLocaleLowerCase()} key={page} onClick={handleCloseNavMenu} sx={{textDecarotion:"none",color:"white"}}>
                   <Typography textAlign="center">{page}</Typography>
                 </NavLink>
-
               ))}
             </Menu>
           </Box>
@@ -127,19 +142,19 @@ const ResponsiveAppBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <NavLink to={"/"+page.toLocaleLowerCase()} >{page}</NavLink>
+                <NavLink to={"/"+page.toLocaleLowerCase()} sx={{textDecarotion:"none",color:"white"}} >{page}</NavLink>
               </Button>
             ))}
           </Box>
          <IconButton aria-label="cart" sx={{marginRight:"10px"}} onClick={()=>navigate("/basket")}>
-        <StyledBadge badgeContent={count} color="secondary">
-          <ShoppingCartIcon />
+        <StyledBadge badgeContent={count} sx={{color:"white"}}>
+          <ShoppingCartIcon  />
         </StyledBadge>
       </IconButton>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {currentUser ? (currentUser.email[0].toUpperCase()):(<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />)}
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,color:"white" }}>
+                {currentUser ? (currentUser.email[0].toUpperCase()):(<AccountCircleIcon />)}
               </IconButton>
             </Tooltip>
             <Menu

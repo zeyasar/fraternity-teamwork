@@ -8,7 +8,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import CardActionArea from "@mui/material/CardActionArea";
-
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
@@ -18,10 +17,9 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 
-const Products = () => {
 
+const Products = () => {
   const {productList,setDetails,setBasket,basket,count,setCount,myArray,setMyArray} = React.useContext(ProductContext)
-  
   console.log(basket)
   const navigate = useNavigate()
   console.log(productList)
@@ -44,13 +42,13 @@ const Products = () => {
       const newBasket = [...basket,item]
       setBasket(newBasket)
       setMyArray([...myArray,item.id])
+      
     }else{
       for(let i=0;i<basket.length+1;i++){
         if(basket[i].id === item.id){
           basket[i].quantity += 1
         }
       }
-      
     }
     
     console.log(basket)
