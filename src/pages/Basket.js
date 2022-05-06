@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,16 +12,16 @@ import {ProductContext} from '../context/ProductContext'
 import {AuthContext} from '../context/AuthContext'
 import { IconButton } from '@mui/material';
 import {DeleteInfo} from "../helpers/databaseFunc"
-import { NavLink, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 export default function Basket() {
   const {basket,setBasket,setMyArray,setCount,count,myArray,basketList} = useContext(ProductContext)
   const {currentUser} = useContext(AuthContext)
-  const [total,setTotal] = React.useState(0)
+  // const [total,setTotal] = React.useState(0)
   const navigate = useNavigate()
+  
 
-
-    let myBasket = basketList?.filter((item) => item.email === currentUser?.email)
+  let myBasket = basketList?.filter((item) => item.email === currentUser?.email)
 
   const myFunc = async () => {
     if(myBasket?.length > 0){
@@ -65,9 +65,11 @@ export default function Basket() {
     }
   }
   console.log("basket",basket)
-  // if(basket.length>0){
-  //   setTotal(basket?.reduce((x,y)=>(+x.price)+(+y.price)))
-  // }
+  
+  if(basket.length>0){
+    const total = basket?.map((x)=>x.price)
+  console.log(total)
+  }
   return (
     <React.Fragment>
       <Table size="small" sx={{textAlign:"center",alignItems:"center",justifyContent:"center"}}>
@@ -93,7 +95,7 @@ export default function Basket() {
           ))}
           <TableRow>
             <TableCell colSpan={4}>Total</TableCell>
-            <TableCell align="right">{`$${basket.length>0 ? basket?.reduce((x,y)=>(+x.price)+(+y.price)):0}`}</TableCell>
+            <TableCell align="right">{`$${basket.length>0 ? basket?.map((item)=>item.price*item.quantity).reduce((x,y)=>(x)+(y)):0}`}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

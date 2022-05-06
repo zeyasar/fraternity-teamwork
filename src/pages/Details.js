@@ -12,15 +12,19 @@ import ShareIcon from '@mui/icons-material/Share';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import { toastWarnNotify } from '../helpers/ToastNotify';
+import { AuthContext } from '../context/AuthContext';
 
 const Details = () => {
   const {details,basket,setBasket,myArray,setMyArray,count,setCount} = useContext(ProductContext)
+  const {currentUser} = useContext(AuthContext)
   const navigate = useNavigate()
   console.log(details)
 
   const handleAddToBasket = (item) => {
     
-    setCount(count+1)
+    if(currentUser){
+      setCount(count+1)
     if(!myArray.includes(item.id)){
       const newBasket = [...basket,item]
       setBasket(newBasket)
@@ -32,7 +36,9 @@ const Details = () => {
           basket[i].quantity += 1
         }
       }
-      
+    }
+    }else{
+      toastWarnNotify("Please Login First")
     }
   }
 

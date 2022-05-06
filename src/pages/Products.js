@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React from "react";
+import React, { useContext } from "react";
 import { ProductContext } from "../context/ProductContext";
 // import { styled } from '@mui/material/styles';
 import Card from "@mui/material/Card";
@@ -16,10 +16,13 @@ import ShareIcon from "@mui/icons-material/Share";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { toastWarnNotify } from "../helpers/ToastNotify";
 
 
 const Products = () => {
   const {productList,setDetails,setBasket,basket,count,setCount,myArray,setMyArray} = React.useContext(ProductContext)
+  const {currentUser} = useContext(AuthContext)
   console.log(basket)
   const navigate = useNavigate()
   console.log(productList)
@@ -37,18 +40,23 @@ const Products = () => {
     // router da path olarak belirttiğimiz path="details/:id" diye yazdığımız yer : nokta id kısmını ifade ettiği için id değerini alıyoruz navigate içine koyuyoruz
   };
   const handleAddToBasket = (item) => {
-    setCount(count+1)
-    if(!myArray.includes(item.id)){
-      const newBasket = [...basket,item]
-      setBasket(newBasket)
-      setMyArray([...myArray,item.id])
-      
-    }else{
-      for(let i=0;i<basket.length+1;i++){
-        if(basket[i].id === item.id){
-          basket[i].quantity += 1
+    if(currentUser){
+      setCount(count+1)
+      if(!myArray.includes(item.id)){
+        const newBasket = [...basket,item]
+        setBasket(newBasket)
+        setMyArray([...myArray,item.id])
+        
+      }else{
+        for(let i=0;i<basket.length+1;i++){
+          if(basket[i].id === item.id){
+            basket[i].quantity += 1
+          }
         }
       }
+    }else{
+      
+      navigate("/login")
     }
     
     console.log(basket)

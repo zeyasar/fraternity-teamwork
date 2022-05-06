@@ -6,40 +6,41 @@ import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import { ProductContext } from '../context/ProductContext';
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
+// const products = [
+//   {
+//     name: 'Product 1',
+//     desc: 'A nice thing',
+//     price: '$9.99',
+//   },
+//   {
+//     name: 'Product 2',
+//     desc: 'Another thing',
+//     price: '$3.45',
+//   },
+//   {
+//     name: 'Product 3',
+//     desc: 'Something else',
+//     price: '$6.51',
+//   },
+//   {
+//     name: 'Product 4',
+//     desc: 'Best thing of all',
+//     price: '$14.11',
+//   },
+//   { name: 'Shipping', desc: '', price: 'Free' },
+// ];
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+// const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+// const payments = [
+//   { name: 'Card type', detail: 'Visa' },
+//   { name: 'Card holder', detail: 'Mr John Smith' },
+//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
+//   { name: 'Expiry date', detail: '04/2024' },
+// ];
 
 export default function Review() {
-    const {basket} = React.useContext(ProductContext);
+    const {basket,adress,card} = React.useContext(ProductContext);
+    console.log(adress)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -56,7 +57,7 @@ export default function Review() {
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-          {`$${basket.length>0 ? basket?.reduce((x,y)=>(+x.price)+(+y.price)):0}`}
+          {`$${basket.length>0 ? basket?.map((item)=>item.price*item.quantity).reduce((x,y)=>(x)+(y)):0}`}
           </Typography>
         </ListItem>
       </List>
@@ -65,24 +66,30 @@ export default function Review() {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{adress.firstName} {adress.lastName}</Typography>
+          <Typography gutterBottom>{adress.city}/{adress.country}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Payment details
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
+            
+              <React.Fragment>
+                <Grid item xs={12}>
+                  <Typography gutterBottom>{card.cardName}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography gutterBottom>{card.cardNumber}</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
+                  <Typography gutterBottom>{card.expDate}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography gutterBottom>{card.cvv}</Typography>
                 </Grid>
               </React.Fragment>
-            ))}
+            
           </Grid>
         </Grid>
       </Grid>

@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AdressForm from './AdressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+// import { SettingsBackupRestoreTwoTone } from '@mui/icons-material';
+import { ProductContext } from '../context/ProductContext';
 
 function Copyright() {
   return (
@@ -48,9 +50,19 @@ const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const {setBasket,setMyArray,setCount} = React.useContext(ProductContext)
 
-  const handleNext = () => {
+  const handleNext = (e) => {
+    console.log(e.target.innerText)
+    if(e.target.innerText === "NEXT"){
     setActiveStep(activeStep + 1);
+    }else{
+      setActiveStep(activeStep + 1);
+      setBasket([])
+      setCount(0)
+      setMyArray([])
+      
+    }
   };
 
   const handleBack = () => {
@@ -111,7 +123,7 @@ export default function Checkout() {
 
                   <Button
                     variant="contained"
-                    onClick={handleNext}
+                    onClick={(e)=>handleNext(e)}
                     sx={{ mt: 3, ml: 1 }}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}

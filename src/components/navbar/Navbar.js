@@ -9,7 +9,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -24,7 +23,6 @@ import {AddInfo} from "../../helpers/databaseFunc";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import "./NavBar.css";
 
-/* import MenuItem from '@mui/material/MenuItem'; */
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -68,7 +66,7 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = (e) => {
     if(e.target.innerText === "Logout"){
       logOut()
-
+      
       if(basket.length > 0){
         AddInfo({[email]:currentUser.email,[baskets]:{...basket},[myArrays]:[...myArray],[counts]:count})
       }
@@ -131,7 +129,7 @@ const ResponsiveAppBar = () => {
             >
               {pages.map((page) => (
                 <NavLink to={"/"+page.toLocaleLowerCase()} key={page} onClick={handleCloseNavMenu} sx={{textDecarotion:"none",color:"white"}}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" sx={{color:"black"}}>{page}</Typography>
                 </NavLink>
               ))}
             </Menu>
@@ -142,9 +140,9 @@ const ResponsiveAppBar = () => {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
-                <NavLink to={"/"+page.toLocaleLowerCase()} sx={{textDecarotion:"none",color:"white"}} >{page}</NavLink>
+                <NavLink to={"/"+page.toLocaleLowerCase()} sx={{textDecarotion:"none",color:"Black"}} >{page}</NavLink>
               </Button>
             ))}
           </Box>

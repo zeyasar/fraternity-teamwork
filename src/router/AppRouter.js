@@ -11,6 +11,8 @@ import Register from '../pages/Register'
 import Details from '../pages/Details'
 import Footer from '../components/footer/Footer'
 import Checkout from '../pages/Checkout'
+import PrivateRouter from './PrivateRouter'
+import Profile from '../pages/Profile'
 
 const AppRouter = () => {
   return (
@@ -23,9 +25,16 @@ const AppRouter = () => {
             <Route path="/about" element={<About/>}/>
             <Route path="/products" element={<Products/>}/>
             <Route path="/contact" element={<Contact/>}/>
-            <Route path="/basket" element={<Basket/>}/>
+            <Route path="/basket" element={<PrivateRouter/>}>
+              <Route path="" element={<Basket/>}/>
+            </Route>
+            <Route path="/profile" element={<PrivateRouter/>}>
+              <Route path="" element={<Profile/>}/>
+            </Route>
             <Route path="/details/:id" element={<Details/>}/>
-            <Route path="/checkout" element={<Checkout/>}/>
+            <Route path="/checkout" element={<PrivateRouter/>}>
+              <Route path="" element={<Checkout/>}/>
+            </Route>
         </Routes>
         <Footer/>
     </Router>

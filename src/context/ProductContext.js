@@ -12,6 +12,8 @@ const ProductContextProvider = (props) => {
     const [count,setCount] = useState(0)
     const [myArray,setMyArray] = useState([])
     const {basketList}= useFetch()
+    const [adress,setAdress] = useState({})
+    const [card,setCard] = useState([])
     
     
     useEffect(() => {
@@ -24,7 +26,7 @@ const ProductContextProvider = (props) => {
     },[]) 
 
     return(
-        <ProductContext.Provider value={{productList,setDetails,details,basket,setBasket,count,setCount,myArray,setMyArray,userBasket,basketList}}>
+        <ProductContext.Provider value={{card,setCard,adress,setAdress,productList,setDetails,details,basket,setBasket,count,setCount,myArray,setMyArray,userBasket,basketList}}>
             {props.children}
         </ProductContext.Provider>
     )

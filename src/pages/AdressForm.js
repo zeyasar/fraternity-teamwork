@@ -4,14 +4,36 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { ProductContext } from '../context/ProductContext';
+
+const initialAdress= {
+    firstName: '',
+    lastName: '',
+    address1:"",
+    city:"",
+    state:"",
+    zip:"",
+    country:"",
+
+}
 
 export default function AddressForm() {
+  const {setAdress} = React.useContext(ProductContext)
+  const [inputVal,setInputVal] = React.useState(initialAdress)
+  
+  const handleAdress = (e)=>{
+    e.preventDefault();
+    const {name,value}=e.target//ilgili input kısmındaki değerleri alıyoruz
+    setAdress({...inputVal,[name]:value})
+    setInputVal({...inputVal,[name]:value})
+  }
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container  spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -21,6 +43,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={handleAdress}
+            value={inputVal.firstName}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -32,6 +56,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            onChange={handleAdress}
+            value={inputVal.lastName}
           />
         </Grid>
         <Grid item xs={12}>
@@ -43,6 +69,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
+            onChange={handleAdress}
+            value={inputVal.address1}
           />
         </Grid>
         <Grid item xs={12}>
@@ -64,6 +92,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
+            onChange={handleAdress}
+            value={inputVal.city}           
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -84,6 +114,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
+            onChange={handleAdress}
+            value={inputVal.zip}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -95,14 +127,22 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            onChange={handleAdress}
+            value={inputVal.country}
           />
         </Grid>
+
         <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
             label="Use this address for payment details"
           />
         </Grid>
+        {/* <Grid item xs={12}>
+          <Button type="submit" onClick={(e)=>handleAdress(e)}>
+            Save Adress
+          </Button>
+        </Grid> */}
       </Grid>
     </React.Fragment>
   );
