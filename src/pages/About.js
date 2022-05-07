@@ -5,6 +5,8 @@ import person3 from "../assets/img/zyasar.jpg";
 import person4 from "../assets/img/ahmet.jpg"
 import person5 from "../assets/img/mst.jpg"
 import person6 from "../assets/img/murt.jpg"
+import person7 from "../assets/img/bora.jpg"
+
 const About = () => {
   return (
     <div className={styles.about}>
@@ -70,6 +72,16 @@ const About = () => {
           <img className={styles.cardImage} alt="person" src={person5} />
           <div className={styles.cardBody}>
             <h3 className={styles.cardText}>Mesut Yıldırım</h3>
+            <p className={styles.cardText}>
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </p>
+          </div>
+        </div>
+        <div className={styles.card}>
+          <img className={styles.cardImage} alt="person" src={person7} />
+          <div className={styles.cardBody}>
+            <h3 className={styles.cardText}>Bora Güneş</h3>
             <p className={styles.cardText}>
               Some quick example text to build on the card title and make up the
               bulk of the card's content.

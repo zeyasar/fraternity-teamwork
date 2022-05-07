@@ -12,14 +12,14 @@ import ShareIcon from '@mui/icons-material/Share';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { toastWarnNotify } from '../helpers/ToastNotify';
+import { toastWarnNotify } from '../helpers/toastNotify';
 import { AuthContext } from '../context/AuthContext';
 
 const Details = () => {
   const {details,basket,setBasket,myArray,setMyArray,count,setCount} = useContext(ProductContext)
   const {currentUser} = useContext(AuthContext)
   const navigate = useNavigate()
-  console.log(details)
+  
 
   const handleAddToBasket = (item) => {
     

@@ -5,7 +5,7 @@ export const useStyles=makeStyles({
     root: {
         backgroundColor: '#222831',
         fontFamily: '"Segoe UI"',
-        height: "100px",
+        height: "50px",
     },
     footer__copyRight:{
         textAlign: 'center',

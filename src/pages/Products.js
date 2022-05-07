@@ -17,7 +17,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { toastWarnNotify } from "../helpers/ToastNotify";
+import { toastWarnNotify } from "../helpers/toastNotify";
 
 
 const Products = () => {
@@ -42,6 +42,7 @@ const Products = () => {
   const handleAddToBasket = (item) => {
     if(currentUser){
       setCount(count+1)
+      toastWarnNotify("Added to Basket")
       if(!myArray.includes(item.id)){
         const newBasket = [...basket,item]
         setBasket(newBasket)
